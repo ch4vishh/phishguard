@@ -6,7 +6,7 @@ const theme = {
   fontMono:    "'Space Mono', monospace",
 
   // ── ORIGINAL GREEN PALETTE ───────────────────────────────────────
-  // BACKGROUNDS
+  // BACKGROUNDS mkmkmkmkmkmkmkkmkmkmkmm
   bg:        '#091413',
   bgCard:    'rgba(40,90,72,0.2)',
   bgNav:     'rgba(9,20,19,0.8)',

@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* ── FONT SYSTEM ──────────────────────────────────────────────────
+   Syne          → brand/logo wordmark  (800)
+   Space Grotesk → headings h1–h4       (500–700)
+   Plus Jakarta  → body prose           (300–600)
+   Space Mono    → code / URL inputs    (400–700)
+──────────────────────────────────────────────────────────────────*/
+
+:root {
+  --font-brand:   'Syne', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,15 +23,20 @@
 body {
   background-color: #091413;
   color: #B0E4CC;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
+  font-weight: 400;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
 }
 
 .mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .page-enter {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import theme from '../theme'
 
 function Login() {
   const navigate = useNavigate()
@@ -25,15 +26,9 @@ function Login() {
 
   const handleSubmit = () => {
     const newErrors = validate()
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return }
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      navigate('/')
-    }, 1500)
+    setTimeout(() => { setLoading(false); navigate('/') }, 1500)
   }
 
   return (
@@ -41,10 +36,8 @@ function Login() {
 
       {/* BACKGROUND */}
       <div style={{
-        position: 'fixed', top: 0, left: 0,
-        width: '100%', height: '100%',
-        zIndex: 0, pointerEvents: 'none',
-        background: '#091413'
+        position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+        zIndex: 0, pointerEvents: 'none', background: '#091413'
       }}>
         <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle,#285A48,transparent)', filter: 'blur(100px)', opacity: 0.8, top: -200, left: -200 }} />
         <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,#408A71,transparent)', filter: 'blur(100px)', opacity: 0.6, bottom: -150, right: -150 }} />
@@ -57,21 +50,20 @@ function Login() {
           width: 100%;
           background: rgba(9,20,19,0.7);
           border-radius: 10px;
-          padding: 0.75rem 1rem;
+          padding: 0.8rem 1rem;
           color: #B0E4CC;
-          font-size: 0.9rem;
-          font-family: 'Inter', sans-serif;
+          font-size: 0.88rem;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-weight: 400;
           box-sizing: border-box;
         }
-        .input-field::placeholder { color: rgba(176,228,204,0.3); }
+        .input-field::placeholder { color: rgba(176,228,204,0.3); font-style: italic; }
         .input-field:focus {
           border-color: rgba(64,138,113,0.9) !important;
           box-shadow: 0 0 20px rgba(64,138,113,0.25);
           outline: none;
         }
-        .submit-btn {
-          transition: all 0.3s ease;
-        }
+        .submit-btn { transition: all 0.3s ease; }
         .submit-btn:hover {
           transform: translateY(-2px);
           box-shadow: 0 8px 28px rgba(64,138,113,0.4);
@@ -81,40 +73,39 @@ function Login() {
         .toggle-tab { transition: all 0.3s ease; cursor: pointer; }
         .toggle-tab:hover { color: #B0E4CC !important; }
         .logo-glow {
-          filter: drop-shadow(0 0 12px rgba(64,138,113,0.5));
+          filter: drop-shadow(0 0 14px rgba(64,138,113,0.5));
           transition: all 0.3s ease;
         }
         .logo-glow:hover {
-          filter: drop-shadow(0 0 20px rgba(64,138,113,0.8));
-          transform: scale(1.05);
+          filter: drop-shadow(0 0 22px rgba(64,138,113,0.8));
+          transform: scale(1.04);
         }
         .switch-link {
           color: #408A71;
           cursor: pointer;
           text-decoration: underline;
+          text-underline-offset: 3px;
           transition: color 0.2s;
+          font-weight: 500;
         }
         .switch-link:hover { color: #B0E4CC; }
+        .feat-row { transition: all 0.2s ease; }
+        .feat-row:hover { transform: translateX(4px); }
       `}</style>
 
-      {/* MAIN LAYOUT — split screen */}
-      <div style={{
-        position: 'relative', zIndex: 5,
-        display: 'flex', minHeight: '100vh'
-      }}>
+      {/* MAIN LAYOUT */}
+      <div style={{ position: 'relative', zIndex: 5, display: 'flex', minHeight: '100vh' }}>
 
-        {/* LEFT SIDE — branding */}
+        {/* LEFT — branding */}
         <div style={{
-          flex: 1,
-          display: 'flex', flexDirection: 'column',
+          flex: 1, display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
           padding: '3rem',
           borderRight: '1px solid rgba(64,138,113,0.15)'
         }}>
 
-          {/* BIG SHIELD */}
           <div className="logo-glow" style={{ marginBottom: '2rem' }}>
-            <svg width="100" height="100" viewBox="0 0 24 24" fill="none">
+            <svg width="96" height="96" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L3 6V12C3 16.97 7.02 21.61 12 23C16.98 21.61 21 16.97 21 12V6L12 2Z"
                 fill="url(#bigShield)" stroke="rgba(176,228,204,0.2)" strokeWidth="0.5"/>
               <path d="M9 12L11 14L15 10" stroke="#B0E4CC"
@@ -128,42 +119,42 @@ function Login() {
             </svg>
           </div>
 
-          <h1 style={{
-            fontFamily: 'Orbitron, sans-serif',
-            fontSize: '2rem', fontWeight: 900,
-            color: '#B0E4CC', letterSpacing: '3px',
-            marginBottom: '1rem', textAlign: 'center'
-          }}>PHISHGUARD</h1>
+          <div style={{
+            fontFamily: theme.fontBrand,
+            fontSize: '2.2rem', fontWeight: 800,
+            color: '#B0E4CC', letterSpacing: '0.05em',
+            marginBottom: '0.5rem', textAlign: 'center', lineHeight: 1
+          }}>PHISHGUARD</div>
 
           <p style={{
             color: 'rgba(176,228,204,0.6)',
-            fontSize: '0.9rem', textAlign: 'center',
-            maxWidth: 280, lineHeight: 1.8,
-            fontFamily: 'Inter, sans-serif', fontWeight: 300
+            fontSize: '0.88rem', textAlign: 'center',
+            maxWidth: 270, lineHeight: 1.85,
+            fontFamily: theme.fontBody, fontWeight: 300,
+            fontStyle: 'italic', marginBottom: '2.8rem'
           }}>
             Your real-time shield against phishing attacks and cyber threats.
           </p>
 
-          {/* FEATURE LIST */}
-          <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
             {[
               ['🌐', 'Scan any URL instantly'],
               ['📧', 'Detect phishing emails'],
               ['📊', 'Full threat reports'],
               ['🕒', 'Complete scan history'],
             ].map(([icon, text]) => (
-              <div key={text} style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem',
+              <div key={text} className="feat-row" style={{
+                display: 'flex', alignItems: 'center', gap: '0.8rem',
                 color: 'rgba(176,228,204,0.7)',
-                fontFamily: 'Inter, sans-serif', fontSize: '0.85rem'
+                fontFamily: theme.fontBody, fontSize: '0.84rem', fontWeight: 400
               }}>
                 <div style={{
-                  width: 32, height: 32,
+                  width: 34, height: 34,
                   background: 'rgba(64,138,113,0.2)',
                   border: '1px solid rgba(64,138,113,0.3)',
-                  borderRadius: 8,
+                  borderRadius: 9,
                   display: 'flex', alignItems: 'center',
-                  justifyContent: 'center', fontSize: 14
+                  justifyContent: 'center', fontSize: 15, flexShrink: 0
                 }}>{icon}</div>
                 {text}
               </div>
@@ -171,37 +162,35 @@ function Login() {
           </div>
         </div>
 
-        {/* RIGHT SIDE — form */}
+        {/* RIGHT — form */}
         <div style={{
-          flex: 1,
-          display: 'flex', alignItems: 'center',
+          flex: 1, display: 'flex', alignItems: 'center',
           justifyContent: 'center', padding: '3rem'
         }}>
-
           <div style={{
             width: '100%', maxWidth: 420,
             background: 'rgba(40,90,72,0.2)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             border: '1px solid rgba(64,138,113,0.25)',
-            borderRadius: 24, padding: '2.5rem',
-            boxShadow: '0 8px 40px rgba(9,20,19,0.8), 0 0 60px rgba(64,138,113,0.06)'
+            borderRadius: 28, padding: '2.8rem',
+            boxShadow: '0 8px 48px rgba(9,20,19,0.8), 0 0 60px rgba(64,138,113,0.06)'
           }}>
 
-            {/* HEADING */}
             <h2 style={{
-              fontFamily: 'Orbitron, sans-serif',
-              color: '#B0E4CC', fontSize: '1.3rem',
+              fontFamily: theme.fontHeading,
+              color: '#B0E4CC', fontSize: '1.4rem',
               fontWeight: 700, textAlign: 'center',
-              letterSpacing: '1px', marginBottom: '0.4rem'
+              letterSpacing: '-0.02em', marginBottom: '0.3rem'
             }}>
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {isLogin ? 'Welcome back' : 'Create account'}
             </h2>
             <p style={{
               color: 'rgba(176,228,204,0.5)',
               fontSize: '0.78rem', textAlign: 'center',
-              marginBottom: '2rem',
-              fontFamily: 'Inter, sans-serif', fontWeight: 300
+              marginBottom: '2.2rem',
+              fontFamily: theme.fontBody, fontWeight: 300,
+              fontStyle: 'italic'
             }}>
               {isLogin ? 'Login to access your threat dashboard' : 'Sign up to start scanning threats'}
             </p>
@@ -210,8 +199,8 @@ function Login() {
             <div style={{
               display: 'flex',
               background: 'rgba(9,20,19,0.6)',
-              borderRadius: 10, padding: '4px',
-              marginBottom: '1.8rem',
+              borderRadius: 12, padding: '4px',
+              marginBottom: '2rem',
               border: '1px solid rgba(64,138,113,0.2)'
             }}>
               {['Login', 'Register'].map((tab) => (
@@ -219,12 +208,12 @@ function Login() {
                   onClick={() => { setIsLogin(tab === 'Login'); setErrors({}) }}
                   style={{
                     flex: 1, textAlign: 'center',
-                    padding: '0.6rem', borderRadius: 8,
+                    padding: '0.65rem', borderRadius: 9,
                     fontSize: '0.78rem',
-                    fontFamily: 'Inter, sans-serif', fontWeight: 500,
-                    letterSpacing: '0.5px',
+                    fontFamily: theme.fontBody, fontWeight: 600,
+                    letterSpacing: '0.3px',
                     background: (isLogin && tab === 'Login') || (!isLogin && tab === 'Register')
-                      ? 'linear-gradient(135deg,#408A71,#285A48)'
+                      ? 'linear-gradient(135deg,#285A48,#408A71)'
                       : 'transparent',
                     color: (isLogin && tab === 'Login') || (!isLogin && tab === 'Register')
                       ? '#B0E4CC' : 'rgba(176,228,204,0.5)',
@@ -234,82 +223,56 @@ function Login() {
               ))}
             </div>
 
-            {/* NAME */}
-            {!isLogin && (
-              <div style={{ marginBottom: '1.2rem' }}>
+            {/* FIELDS */}
+            {[
+              ...(!isLogin ? [{ name: 'name', label: 'Full Name', placeholder: 'John Doe', type: 'text' }] : []),
+              { name: 'email', label: 'Email Address', placeholder: 'you@example.com', type: 'email' },
+              { name: 'password', label: 'Password', placeholder: '••••••••', type: 'password' },
+            ].map(({ name, label, placeholder, type }) => (
+              <div key={name} style={{ marginBottom: '1.3rem' }}>
                 <label style={{
-                  color: 'rgba(176,228,204,0.6)', fontSize: '0.7rem',
-                  textTransform: 'uppercase', letterSpacing: '1px',
+                  color: 'rgba(176,228,204,0.6)', fontSize: '0.68rem',
+                  textTransform: 'uppercase', letterSpacing: '1.5px',
                   display: 'block', marginBottom: '0.5rem',
-                  fontFamily: 'Inter, sans-serif'
-                }}>Full Name</label>
-                <input name="name" value={formData.name}
-                  onChange={handleChange} placeholder="John Doe"
+                  fontFamily: theme.fontBody, fontWeight: 600
+                }}>{label}</label>
+                <input name={name} type={type}
+                  value={formData[name]}
+                  onChange={handleChange} placeholder={placeholder}
                   className="input-field"
-                  style={{ border: `1px solid ${errors.name ? '#F87171' : 'rgba(64,138,113,0.3)'}` }}
+                  style={{ border: `1px solid ${errors[name] ? '#F87171' : 'rgba(64,138,113,0.3)'}` }}
                 />
-                {errors.name && <p style={{ color: '#F87171', fontSize: '0.72rem', marginTop: '0.4rem', fontFamily: 'Inter, sans-serif' }}>⚠ {errors.name}</p>}
+                {errors[name] && (
+                  <p style={{ color: '#F87171', fontSize: '0.72rem', marginTop: '0.4rem', fontFamily: theme.fontBody }}>
+                    ⚠ {errors[name]}
+                  </p>
+                )}
               </div>
-            )}
-
-            {/* EMAIL */}
-            <div style={{ marginBottom: '1.2rem' }}>
-              <label style={{
-                color: 'rgba(176,228,204,0.6)', fontSize: '0.7rem',
-                textTransform: 'uppercase', letterSpacing: '1px',
-                display: 'block', marginBottom: '0.5rem',
-                fontFamily: 'Inter, sans-serif'
-              }}>Email Address</label>
-              <input name="email" value={formData.email}
-                onChange={handleChange} placeholder="you@example.com"
-                className="input-field"
-                style={{ border: `1px solid ${errors.email ? '#F87171' : 'rgba(64,138,113,0.3)'}` }}
-              />
-              {errors.email && <p style={{ color: '#F87171', fontSize: '0.72rem', marginTop: '0.4rem', fontFamily: 'Inter, sans-serif' }}>⚠ {errors.email}</p>}
-            </div>
-
-            {/* PASSWORD */}
-            <div style={{ marginBottom: '1.8rem' }}>
-              <label style={{
-                color: 'rgba(176,228,204,0.6)', fontSize: '0.7rem',
-                textTransform: 'uppercase', letterSpacing: '1px',
-                display: 'block', marginBottom: '0.5rem',
-                fontFamily: 'Inter, sans-serif'
-              }}>Password</label>
-              <input name="password" type="password"
-                value={formData.password}
-                onChange={handleChange} placeholder="••••••••"
-                className="input-field"
-                style={{ border: `1px solid ${errors.password ? '#F87171' : 'rgba(64,138,113,0.3)'}` }}
-              />
-              {errors.password && <p style={{ color: '#F87171', fontSize: '0.72rem', marginTop: '0.4rem', fontFamily: 'Inter, sans-serif' }}>⚠ {errors.password}</p>}
-            </div>
+            ))}
 
             {/* SUBMIT */}
             <button onClick={handleSubmit} disabled={loading}
               className="submit-btn"
               style={{
-                width: '100%',
-                background: loading
-                  ? 'rgba(64,138,113,0.3)'
-                  : 'linear-gradient(135deg,#285A48,#408A71)',
+                width: '100%', marginTop: '0.5rem',
+                background: loading ? 'rgba(64,138,113,0.3)' : 'linear-gradient(135deg,#285A48,#408A71)',
                 border: 'none', color: '#B0E4CC',
-                padding: '0.9rem', borderRadius: 12,
-                fontSize: '0.82rem', cursor: loading ? 'not-allowed' : 'pointer',
-                fontFamily: 'Orbitron, sans-serif',
+                padding: '0.95rem', borderRadius: 13,
+                fontSize: '0.78rem', cursor: loading ? 'not-allowed' : 'pointer',
+                fontFamily: theme.fontBrand,
                 fontWeight: 700, letterSpacing: '2px',
+                textTransform: 'uppercase'
               }}>
-              {loading ? 'VERIFYING...' : isLogin ? 'LOGIN' : 'CREATE ACCOUNT'}
+              {loading ? 'Verifying…' : isLogin ? 'Login' : 'Create Account'}
             </button>
 
             <p style={{
-              color: 'rgba(176,228,204,0.5)', fontSize: '0.75rem',
-              textAlign: 'center', marginTop: '1.5rem',
-              fontFamily: 'Inter, sans-serif'
+              color: 'rgba(176,228,204,0.5)', fontSize: '0.74rem',
+              textAlign: 'center', marginTop: '1.6rem',
+              fontFamily: theme.fontBody
             }}>
               {isLogin ? "Don't have an account? " : 'Already have an account? '}
-              <span className="switch-link"
-                onClick={() => { setIsLogin(!isLogin); setErrors({}) }}>
+              <span className="switch-link" onClick={() => { setIsLogin(!isLogin); setErrors({}) }}>
                 {isLogin ? 'Register' : 'Login'}
               </span>
             </p>

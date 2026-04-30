@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #091413;
+  color: #B0E4CC;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.page-enter {
+  animation: fadeSlideIn 0.4s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.glass-card {
+  transition: all 0.3s ease;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(64,138,113,0.5) !important;
+  box-shadow: 0 12px 30px rgba(9,20,19,0.6);
+}

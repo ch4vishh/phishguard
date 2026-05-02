@@ -4,6 +4,8 @@ import { scanWithVirusTotal } from '../api/virustotal'
 import { scanWithSafeBrowsing } from '../api/safebrowsing'
 import { useScan } from '../context/ScanContext'
 import theme from '../theme'
+import ThreatCard from '../components/ThreatCard'
+import Loader from '../components/Loader'
 
 function Results() {
   const { id } = useParams()
@@ -14,12 +16,10 @@ function Results() {
   const [vtResult, setVtResult] = useState(null)
   const [error, setError]       = useState(null)
   const { addScan } = useScan()
-  
 
-const getRisk = () => {
+  const getRisk = () => {
     if (!vtResult) return 'unknown'
     if (vtResult.malicious >= 10) return 'dangerous'
-    if (vtResult.malicious >= 5)  return 'suspicious'
     if (vtResult.malicious >= 2)  return 'suspicious'
     return 'safe'
   }
@@ -38,22 +38,22 @@ const getRisk = () => {
       try {
         setLoading(true)
         const vt = await scanWithVirusTotal(url)
-setVtResult(vt)
+        setVtResult(vt)
 
-if (vt) {
-  const riskLevel =
-    vt.malicious >= 10 ? 'dangerous' :
-    vt.malicious >= 2  ? 'suspicious' : 'safe'
+        if (vt) {
+          const riskLevel =
+            vt.malicious >= 10 ? 'dangerous' :
+            vt.malicious >= 2  ? 'suspicious' : 'safe'
 
-  addScan({
-    url,
-    risk: riskLevel,
-    malicious:  vt.malicious,
-    suspicious: vt.suspicious,
-    harmless:   vt.harmless,
-    total:      vt.total
-  })
-}
+          addScan({
+            url,
+            risk: riskLevel,
+            malicious:  vt.malicious,
+            suspicious: vt.suspicious,
+            harmless:   vt.harmless,
+            total:      vt.total
+          })
+        }
       } catch (err) {
         setError('Something went wrong. Please try again.')
       } finally {
@@ -66,7 +66,6 @@ if (vt) {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
 
-      {/* BACKGROUND */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none', background: theme.bg }}>
         <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle,${theme.green1},transparent)`, filter: 'blur(100px)', opacity: 0.6, top: -100, left: -100 }} />
         <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle,${theme.green2},transparent)`, filter: 'blur(100px)', opacity: 0.4, bottom: -100, right: -100 }} />
@@ -84,7 +83,6 @@ if (vt) {
 
       <div style={{ position: 'relative', zIndex: 5, padding: '3rem 4rem', maxWidth: 820, margin: '0 auto' }}>
 
-        {/* BACK BUTTON */}
         <button onClick={() => navigate('/')} className="back-btn"
           style={{
             background: 'transparent',
@@ -100,7 +98,6 @@ if (vt) {
           Back to Scanner
         </button>
 
-        {/* PAGE TITLE */}
         <h1 style={{
           fontFamily: 'Orbitron, sans-serif',
           color: theme.text, fontSize: '1.5rem',
@@ -114,59 +111,12 @@ if (vt) {
           {loading ? 'Scanning your URL against 70+ security engines...' : 'Analysis complete'}
         </p>
 
-        {/* URL DISPLAY */}
-        <div style={{
-          background: theme.bgCard,
-          backdropFilter: 'blur(20px)',
-          border: `1px solid ${theme.border}`,
-          borderRadius: 14, padding: '1rem 1.5rem',
-          marginBottom: '1.5rem',
-          display: 'flex', alignItems: 'center', gap: '1rem'
-        }}>
-          <div style={{
-            width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
-            background: loading ? theme.warning : riskConfig[risk].color,
-            boxShadow: `0 0 8px ${loading ? theme.warning : riskConfig[risk].color}`,
-            animation: loading ? 'pulse 1.5s infinite' : 'none'
-          }} />
-          <span style={{
-            fontFamily: 'JetBrains Mono, monospace',
-            color: theme.text, fontSize: '0.82rem',
-            wordBreak: 'break-all'
-          }}>{url}</span>
-        </div>
-
-        {/* LOADING */}
         {loading && (
-          <div style={{
-            background: theme.bgCard,
-            backdropFilter: 'blur(20px)',
-            border: `1px solid ${theme.border}`,
-            borderRadius: 20, padding: '5rem 2rem',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              width: 52, height: 52,
-              border: `3px solid rgba(64,138,113,0.15)`,
-              borderTop: `3px solid ${theme.green2}`,
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-              margin: '0 auto 2rem'
-            }} />
-            <p style={{
-              fontFamily: 'Orbitron, sans-serif',
-              color: theme.text, fontSize: '0.85rem',
-              letterSpacing: '2px', marginBottom: '0.6rem'
-            }}>Scanning</p>
-            <p style={{
-              fontFamily: 'Inter, sans-serif',
-              color: theme.textSub, fontSize: '0.78rem',
-              fontWeight: 300
-            }}>This may take a few seconds</p>
+          <div style={{ background: theme.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${theme.border}`, borderRadius: 20 }}>
+            <Loader message="Scanning" />
           </div>
         )}
 
-        {/* ERROR */}
         {error && !loading && (
           <div style={{
             background: `rgba(248,113,113,0.08)`,
@@ -191,47 +141,10 @@ if (vt) {
           </div>
         )}
 
-        {/* RESULTS */}
         {!loading && !error && vtResult && (
           <>
-            {/* MAIN RISK CARD */}
-            <div style={{
-              background: theme.bgCard,
-              backdropFilter: 'blur(20px)',
-              border: `2px solid ${riskConfig[risk].color}35`,
-              borderRadius: 20, padding: '2.5rem',
-              marginBottom: '1.5rem', textAlign: 'center',
-              boxShadow: `0 0 50px ${riskConfig[risk].color}10`
-            }}>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-                background: `${riskConfig[risk].color}12`,
-                border: `1px solid ${riskConfig[risk].color}35`,
-                padding: '0.5rem 1.8rem',
-                borderRadius: 999, marginBottom: '1rem'
-              }}>
-                <div style={{
-                  width: 8, height: 8, borderRadius: '50%',
-                  background: riskConfig[risk].color,
-                  boxShadow: `0 0 8px ${riskConfig[risk].color}`
-                }} />
-                <span style={{
-                  fontFamily: 'Orbitron, sans-serif',
-                  color: riskConfig[risk].color,
-                  fontSize: '0.82rem', fontWeight: 700,
-                  letterSpacing: '3px'
-                }}>{riskConfig[risk].label}</span>
-              </div>
+            <ThreatCard risk={risk} message={riskConfig[risk].message} />
 
-              <p style={{
-                color: theme.textSub,
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.88rem', fontWeight: 300,
-                lineHeight: 1.7
-              }}>{riskConfig[risk].message}</p>
-            </div>
-
-            {/* STATS GRID */}
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(4, 1fr)',
@@ -265,7 +178,6 @@ if (vt) {
               ))}
             </div>
 
-            {/* VIRUSTOTAL DETAIL ROW */}
             <div className="result-card" style={{
               background: theme.bgCard,
               backdropFilter: 'blur(20px)',
@@ -305,7 +217,6 @@ if (vt) {
               </div>
             </div>
 
-            {/* BREAKDOWN BAR */}
             <div style={{
               background: theme.bgCard,
               backdropFilter: 'blur(20px)',
@@ -319,7 +230,6 @@ if (vt) {
                 letterSpacing: '0.5px', marginBottom: '1rem'
               }}>Engine Breakdown</p>
 
-              {/* PROGRESS BAR */}
               <div style={{
                 display: 'flex', borderRadius: 999,
                 overflow: 'hidden', height: 10,
@@ -357,7 +267,6 @@ if (vt) {
               </div>
             </div>
 
-            {/* SCAN ANOTHER */}
             <div style={{ textAlign: 'center' }}>
               <button onClick={() => navigate('/')} className="scan-btn" style={{
                 background: theme.gradBtn,
@@ -372,7 +281,6 @@ if (vt) {
           </>
         )}
 
-        {/* NO RESULT */}
         {!loading && !error && !vtResult && (
           <div style={{
             background: theme.bgCard,

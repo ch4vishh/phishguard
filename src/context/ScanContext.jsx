@@ -4,7 +4,6 @@ const ScanContext = createContext()
 
 export function ScanProvider({ children }) {
   const [scans, setScans] = useState([
-    // dummy data so History and Dashboard are not empty
     {
       id: 1,
       url: 'https://suspicious-login-bank.com',

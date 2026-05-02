@@ -34,7 +34,6 @@ function Login() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
 
-      {/* BACKGROUND */}
       <div style={{
         position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
         zIndex: 0, pointerEvents: 'none', background: '#091413'
@@ -93,10 +92,8 @@ function Login() {
         .feat-row:hover { transform: translateX(4px); }
       `}</style>
 
-      {/* MAIN LAYOUT */}
       <div style={{ position: 'relative', zIndex: 5, display: 'flex', minHeight: '100vh' }}>
 
-        {/* LEFT — branding */}
         <div style={{
           flex: 1, display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
@@ -162,7 +159,6 @@ function Login() {
           </div>
         </div>
 
-        {/* RIGHT — form */}
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center',
           justifyContent: 'center', padding: '3rem'
@@ -195,7 +191,6 @@ function Login() {
               {isLogin ? 'Login to access your threat dashboard' : 'Sign up to start scanning threats'}
             </p>
 
-            {/* TABS */}
             <div style={{
               display: 'flex',
               background: 'rgba(9,20,19,0.6)',
@@ -223,7 +218,6 @@ function Login() {
               ))}
             </div>
 
-            {/* FIELDS */}
             {[
               ...(!isLogin ? [{ name: 'name', label: 'Full Name', placeholder: 'John Doe', type: 'text' }] : []),
               { name: 'email', label: 'Email Address', placeholder: 'you@example.com', type: 'email' },
@@ -250,7 +244,6 @@ function Login() {
               </div>
             ))}
 
-            {/* SUBMIT */}
             <button onClick={handleSubmit} disabled={loading}
               className="submit-btn"
               style={{

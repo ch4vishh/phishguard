@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import About from './pages/About'
 import Login from './pages/Login'
 import Navbar from './components/Navbar'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -32,8 +33,10 @@ function AnimatedRoutes() {
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <AnimatedRoutes />
+      <ErrorBoundary>
+        <Navbar />
+        <AnimatedRoutes />
+      </ErrorBoundary>
     </BrowserRouter>
   )
 }
